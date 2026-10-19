@@ -11,7 +11,13 @@ ExecutorImpl::ExecutorImpl(const Pose& initialPose) noexcept : pose(initialPose)
 }
 void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
-    (void)commands;
+    for (const char command : commands) {
+        if (command == 'M') {
+            if (pose.heading == 'E') {
+                ++pose.x;
+            }
+        }
+    }
 }
 Pose ExecutorImpl::Query() const noexcept
 {
