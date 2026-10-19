@@ -19,6 +19,9 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
             else if (pose.heading == 'W') {
                 --pose.x;
             }
+            else if (pose.heading == 'N') {
+                ++pose.y;
+            }
         }
     }
 }
