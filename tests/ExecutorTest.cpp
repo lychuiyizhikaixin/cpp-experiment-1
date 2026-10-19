@@ -196,4 +196,22 @@ TEST(ExecutorTest, should_return_facing_E_given_command_is_R_and_facing_is_N)
     const Pose target{2, -3, 'E'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// TC15: 混合指令与连续调用
+TEST(ExecutorTest, should_preserve_state_across_empty_and_mixed_command_batches)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'N'}));
+    ASSERT_NE(nullptr, executor);
+    // when: empty input leaves the state unchanged; later calls continue from it.
+    executor->Execute("");
+    ASSERT_EQ((Pose{0, 0, 'N'}), executor->Query());
+    executor->Execute("MLM");
+    ASSERT_EQ((Pose{-1, 1, 'W'}), executor->Query());
+    executor->Execute("MRM");
+    // then
+    const Pose target{-2, 2, 'N'};
+    ASSERT_EQ(target, executor->Query());
+    ASSERT_EQ(target, executor->Query());  // Query has no side effects.
+}
 }  // namespace adas
