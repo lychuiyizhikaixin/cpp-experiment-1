@@ -11,7 +11,7 @@ struct Pose {
 class Executor {
 public:
     // Caller owns the returned pointer. A null pointer indicates allocation failure.
-    static Executor* NewExecutor(const Pose& pose) noexcept;
+    static Executor* NewExecutor(const Pose& pose = {0, 0, 'N'}) noexcept;
     Executor() = default;
     virtual ~Executor() noexcept = default;
     Executor(const Executor&) = delete;
