@@ -40,6 +40,11 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
                 pose.heading = 'E';
             }
         }
+        else if (command == 'R') {
+            if (pose.heading == 'E') {
+                pose.heading = 'S';
+            }
+        }
     }
 }
 Pose ExecutorImpl::Query() const noexcept
