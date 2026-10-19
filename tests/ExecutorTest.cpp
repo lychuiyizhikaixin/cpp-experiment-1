@@ -92,4 +92,17 @@ TEST(ExecutorTest, should_return_y_minus_1_given_command_is_M_and_facing_is_S)
     const Pose target{0, -1, 'S'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// TC07: 朝东左转至北
+TEST(ExecutorTest, should_return_facing_N_given_command_is_L_and_facing_is_E)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({2, -3, 'E'}));
+    ASSERT_NE(nullptr, executor);
+    // when
+    executor->Execute("L");
+    // then
+    const Pose target{2, -3, 'N'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
