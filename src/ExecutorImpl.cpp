@@ -16,7 +16,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
             MoveCommand{}.DoOperate(*this);
         }
         else if (command == 'L') {
-            TurnLeft();
+            TurnLeftCommand{}.DoOperate(*this);
         }
         else if (command == 'R') {
             TurnRight();
