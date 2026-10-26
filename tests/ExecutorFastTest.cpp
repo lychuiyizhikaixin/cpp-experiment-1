@@ -233,4 +233,32 @@ TEST(ExecutorFastTest, should_preserve_fast_state_across_calls_and_empty_input)
     const Pose target{3, 3, 'E'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// F18: 课件完整加速轨迹
+TEST(ExecutorFastTest, should_follow_the_course_fast_command_route)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'N'}));
+    ASSERT_NE(nullptr, executor);
+    // when
+    executor->Execute("FMLMLM");
+    // Verify the course route again in batches with explicit intermediate poses.
+    std::unique_ptr<Executor> staged(Executor::NewExecutor());
+    ASSERT_NE(nullptr, staged);
+    staged->Execute("F");
+    ASSERT_EQ((Pose{0, 0, 'N'}), staged->Query());
+    staged->Execute("M");
+    ASSERT_EQ((Pose{0, 2, 'N'}), staged->Query());
+    staged->Execute("L");
+    ASSERT_EQ((Pose{0, 3, 'W'}), staged->Query());
+    staged->Execute("M");
+    ASSERT_EQ((Pose{-2, 3, 'W'}), staged->Query());
+    staged->Execute("L");
+    ASSERT_EQ((Pose{-3, 3, 'S'}), staged->Query());
+    staged->Execute("M");
+    ASSERT_EQ((Pose{-3, 1, 'S'}), staged->Query());
+    // then
+    const Pose target{-3, 1, 'S'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
