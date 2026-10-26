@@ -43,4 +43,17 @@ TEST(ExecutorFastTest, should_move_east_then_turn_south_when_fast)
     const Pose target{1, 0, 'S'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// F04: FFM 取消加速
+TEST(ExecutorFastTest, should_move_one_step_north_after_two_fast_toggles)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor());
+    ASSERT_NE(nullptr, executor);
+    // when
+    executor->Execute("FFM");
+    // then
+    const Pose target{0, 1, 'N'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
