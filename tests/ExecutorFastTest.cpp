@@ -186,4 +186,17 @@ TEST(ExecutorFastTest, should_toggle_fast_without_changing_pose)
     const Pose target{2, -3, 'E'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// F15: FFF 奇数次切换后加速
+TEST(ExecutorFastTest, should_stay_fast_after_three_toggles)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'N'}));
+    ASSERT_NE(nullptr, executor);
+    // when
+    executor->Execute("FFFM");
+    // then
+    const Pose target{0, 2, 'N'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
