@@ -199,4 +199,17 @@ TEST(ExecutorFastTest, should_stay_fast_after_three_toggles)
     const Pose target{0, 2, 'N'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// F16: FMFM 取消后恢复一步
+TEST(ExecutorFastTest, should_restore_normal_move_after_fast_move)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'N'}));
+    ASSERT_NE(nullptr, executor);
+    // when
+    executor->Execute("FMFM");
+    // then
+    const Pose target{0, 3, 'N'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
