@@ -12,6 +12,7 @@ public:
     Pose Query() const noexcept override;
 private:
     void Move() noexcept;
+    void TurnLeft() noexcept;
     Pose pose;
 };
 }  // namespace adas
