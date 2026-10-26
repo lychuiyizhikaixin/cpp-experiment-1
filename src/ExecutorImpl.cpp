@@ -14,6 +14,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
     const MoveCommand moveCommand;
     const TurnLeftCommand turnLeftCommand;
     const TurnRightCommand turnRightCommand;
+    const FastCommand fastCommand;
     for (const char command : commands) {
         const ICommand* commander = nullptr;
         if (command == 'M') {
@@ -24,6 +25,9 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
         }
         else if (command == 'R') {
             commander = &turnRightCommand;
+        }
+        else if (command == 'F') {
+            commander = &fastCommand;
         }
         if (commander != nullptr) {
             commander->DoOperate(*this);
@@ -74,6 +78,14 @@ void ExecutorImpl::TurnRight() noexcept
     else if (pose.heading == 'N') {
         pose.heading = 'E';
     }
+}
+void ExecutorImpl::Fast() noexcept
+{
+    fast = !fast;
+}
+bool ExecutorImpl::IsFast() const noexcept
+{
+    return fast;
 }
 Pose ExecutorImpl::Query() const noexcept
 {

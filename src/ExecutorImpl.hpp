@@ -14,6 +14,8 @@ private:
     void Move() noexcept;
     void TurnLeft() noexcept;
     void TurnRight() noexcept;
+    void Fast() noexcept;
+    bool IsFast() const noexcept;
     class ICommand {
     public:
         virtual ~ICommand() noexcept = default;
@@ -40,6 +42,14 @@ private:
             executor.TurnRight();
         }
     };
+    class FastCommand final : public ICommand {
+    public:
+        void DoOperate(ExecutorImpl& executor) const noexcept override
+        {
+            executor.Fast();
+        }
+    };
     Pose pose;
+    bool fast{false};
 };
 }  // namespace adas
