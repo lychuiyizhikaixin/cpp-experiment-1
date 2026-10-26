@@ -278,4 +278,20 @@ TEST(ExecutorFastTest, should_keep_fast_state_independent_between_executors)
     const Pose target{0, 2, 'N'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// F20: FF 取消后转向保持原地
+TEST(ExecutorFastTest, should_turn_in_place_after_cancelling_fast)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({2, -3, 'N'}));
+    ASSERT_NE(nullptr, executor);
+    // when
+    executor->Execute("FF");
+    executor->Execute("L");
+    ASSERT_EQ((Pose{2, -3, 'W'}), executor->Query());
+    executor->Execute("R");
+    // then
+    const Pose target{2, -3, 'N'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
