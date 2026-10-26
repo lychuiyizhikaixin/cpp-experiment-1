@@ -1,19 +1,7 @@
 #include <gtest/gtest.h>
 #include <memory>
-#include <ostream>
-#include <tuple>
 #include "Executor.hpp"
-
-namespace adas {
-bool operator==(const Pose& lhs, const Pose& rhs)
-{
-    return std::tie(lhs.x, lhs.y, lhs.heading) == std::tie(rhs.x, rhs.y, rhs.heading);
-}
-void PrintTo(const Pose& pose, std::ostream* output)
-{
-    *output << "(" << pose.x << ", " << pose.y << ", " << pose.heading << ")";
-}
-}  // namespace adas
+#include "PoseEq.hpp"
 
 namespace adas {
 
