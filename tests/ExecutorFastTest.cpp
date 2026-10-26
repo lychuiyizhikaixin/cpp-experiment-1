@@ -147,4 +147,17 @@ TEST(ExecutorFastTest, should_move_south_then_turn_west_when_fast)
     const Pose target{2, -4, 'W'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// F12: FR 西向先行后右转
+TEST(ExecutorFastTest, should_move_west_then_turn_north_when_fast)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({2, -3, 'W'}));
+    ASSERT_NE(nullptr, executor);
+    // when
+    executor->Execute("FR");
+    // then
+    const Pose target{1, -3, 'N'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
