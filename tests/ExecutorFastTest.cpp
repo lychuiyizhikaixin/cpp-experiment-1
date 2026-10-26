@@ -173,4 +173,17 @@ TEST(ExecutorFastTest, should_move_north_then_turn_east_when_fast)
     const Pose target{2, -2, 'E'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// F14: F 本身不移动与不转向
+TEST(ExecutorFastTest, should_toggle_fast_without_changing_pose)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({2, -3, 'E'}));
+    ASSERT_NE(nullptr, executor);
+    // when
+    executor->Execute("F");
+    // then
+    const Pose target{2, -3, 'E'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
