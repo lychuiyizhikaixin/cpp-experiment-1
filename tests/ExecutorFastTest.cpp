@@ -69,4 +69,17 @@ TEST(ExecutorFastTest, should_move_two_steps_west_when_fast)
     const Pose target{0, -3, 'W'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// F06: FM 北向加速移动
+TEST(ExecutorFastTest, should_move_two_steps_north_when_fast)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({2, -3, 'N'}));
+    ASSERT_NE(nullptr, executor);
+    // when
+    executor->Execute("FM");
+    // then
+    const Pose target{2, -1, 'N'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
