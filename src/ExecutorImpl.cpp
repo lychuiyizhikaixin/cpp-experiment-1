@@ -11,15 +11,22 @@ ExecutorImpl::ExecutorImpl(const Pose& initialPose) noexcept : pose(initialPose)
 }
 void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
+    const MoveCommand moveCommand;
+    const TurnLeftCommand turnLeftCommand;
+    const TurnRightCommand turnRightCommand;
     for (const char command : commands) {
+        const ICommand* commander = nullptr;
         if (command == 'M') {
-            MoveCommand{}.DoOperate(*this);
+            commander = &moveCommand;
         }
         else if (command == 'L') {
-            TurnLeftCommand{}.DoOperate(*this);
+            commander = &turnLeftCommand;
         }
         else if (command == 'R') {
-            TurnRightCommand{}.DoOperate(*this);
+            commander = &turnRightCommand;
+        }
+        if (commander != nullptr) {
+            commander->DoOperate(*this);
         }
     }
 }
