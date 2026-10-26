@@ -19,7 +19,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
             TurnLeftCommand{}.DoOperate(*this);
         }
         else if (command == 'R') {
-            TurnRight();
+            TurnRightCommand{}.DoOperate(*this);
         }
     }
 }
