@@ -35,6 +35,9 @@ private:
     public:
         void DoOperate(ExecutorImpl& executor) const noexcept override
         {
+            if (executor.IsFast()) {
+                executor.Move();
+            }
             executor.TurnLeft();
         }
     };
