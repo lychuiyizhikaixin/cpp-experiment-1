@@ -13,18 +13,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
     for (const char command : commands) {
         if (command == 'M') {
-            if (pose.heading == 'E') {
-                ++pose.x;
-            }
-            else if (pose.heading == 'W') {
-                --pose.x;
-            }
-            else if (pose.heading == 'N') {
-                ++pose.y;
-            }
-            else if (pose.heading == 'S') {
-                --pose.y;
-            }
+            Move();
         }
         else if (command == 'L') {
             if (pose.heading == 'E') {
@@ -54,6 +43,21 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
                 pose.heading = 'E';
             }
         }
+    }
+}
+void ExecutorImpl::Move() noexcept
+{
+    if (pose.heading == 'E') {
+        ++pose.x;
+    }
+    else if (pose.heading == 'W') {
+        --pose.x;
+    }
+    else if (pose.heading == 'N') {
+        ++pose.y;
+    }
+    else if (pose.heading == 'S') {
+        --pose.y;
     }
 }
 Pose ExecutorImpl::Query() const noexcept
