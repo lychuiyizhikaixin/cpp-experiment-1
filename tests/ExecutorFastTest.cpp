@@ -212,4 +212,25 @@ TEST(ExecutorFastTest, should_restore_normal_move_after_fast_move)
     const Pose target{0, 3, 'N'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// F17: 跨调用保持加速与空输入
+TEST(ExecutorFastTest, should_preserve_fast_state_across_calls_and_empty_input)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'N'}));
+    ASSERT_NE(nullptr, executor);
+    // when
+    executor->Execute("F");
+    executor->Execute("M");
+    ASSERT_EQ((Pose{0, 2, 'N'}), executor->Query());
+    executor->Execute("");
+    ASSERT_EQ((Pose{0, 2, 'N'}), executor->Query());
+    executor->Execute("RM");
+    ASSERT_EQ((Pose{2, 3, 'E'}), executor->Query());
+    executor->Execute("F");
+    executor->Execute("M");
+    // then
+    const Pose target{3, 3, 'E'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
