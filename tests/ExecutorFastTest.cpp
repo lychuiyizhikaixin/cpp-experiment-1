@@ -261,4 +261,21 @@ TEST(ExecutorFastTest, should_follow_the_course_fast_command_route)
     const Pose target{-3, 1, 'S'};
     ASSERT_EQ(target, executor->Query());
 }
+
+// F19: 不同执行器加速状态隔离
+TEST(ExecutorFastTest, should_keep_fast_state_independent_between_executors)
+{
+    // given
+    std::unique_ptr<Executor> executor(Executor::NewExecutor({0, 0, 'N'}));
+    ASSERT_NE(nullptr, executor);
+    // when
+    std::unique_ptr<Executor> normal(Executor::NewExecutor());
+    ASSERT_NE(nullptr, normal);
+    executor->Execute("FM");
+    normal->Execute("M");
+    ASSERT_EQ((Pose{0, 1, 'N'}), normal->Query());
+    // then
+    const Pose target{0, 2, 'N'};
+    ASSERT_EQ(target, executor->Query());
+}
 }  // namespace adas
