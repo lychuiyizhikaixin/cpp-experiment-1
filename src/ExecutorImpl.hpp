@@ -14,6 +14,13 @@ private:
     void Move() noexcept;
     void TurnLeft() noexcept;
     void TurnRight() noexcept;
+    class MoveCommand final {
+    public:
+        void DoOperate(ExecutorImpl& executor) const noexcept
+        {
+            executor.Move();
+        }
+    };
     Pose pose;
 };
 }  // namespace adas

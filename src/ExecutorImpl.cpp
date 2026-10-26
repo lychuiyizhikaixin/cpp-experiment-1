@@ -13,7 +13,7 @@ void ExecutorImpl::Execute(const std::string& commands) noexcept
 {
     for (const char command : commands) {
         if (command == 'M') {
-            Move();
+            MoveCommand{}.DoOperate(*this);
         }
         else if (command == 'L') {
             TurnLeft();
